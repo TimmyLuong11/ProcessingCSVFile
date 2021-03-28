@@ -9,13 +9,14 @@ namespace ProcessingCSVFile
     {
         static void Main(string[] args)
         {
+            //Initializing Variables
             string[] lines = File.ReadAllLines("sales_data_sample.csv");
             Dictionary<string, List<double>> years = new Dictionary<string, List<double>>();
             Dictionary<string, List<double>> months = new Dictionary<string, List<double>>();
-            double total, sum;
+            double sum;
             string sale;
 
-            
+            //Going through the file each line and for each year total adding the total to their respective list
             years.Add("2003", new List<double>());
             years.Add("2004", new List<double>());
             years.Add("2005", new List<double>());
@@ -40,21 +41,21 @@ namespace ProcessingCSVFile
                 }
             }
 
+            //Calculating the sum for the years and outputting the results to the user
             foreach (string year in years.Keys)
             {
-                List<double> sa = years[year];
+                List<double> total = years[year];
                 sum = 0;
-                for (int i = 0; i < sa.Count; i++)
+                for (int i = 0; i < total.Count; i++)
                 {
-                    sum += sa[i];
+                    sum += total[i];
                 }
                 Console.WriteLine($"The total sale for {year} was {sum.ToString("C")}.");
             }
-            
-            
+
+            //Going through the file each line and for each month total adding the total to their respective list
             for (int i = 1; i < lines.Length; i++)
             {
-                List<double> test = new List<double>();
                 string line = lines[i];
                 string[] pieces = line.Split(',');
                 if (pieces[6] == "Shipped")
@@ -72,15 +73,16 @@ namespace ProcessingCSVFile
                 }
             }
 
+            //Calculating the sum for the each month for the year and outputting the results to the user
             foreach (string month in months.Keys)
             {
-                List<double> tot = months[month];
-                total = 0;
-                for (int a = 0; a < tot.Count; a++)
+                List<double> result = months[month];
+                sum = 0;
+                for (int a = 0; a < result.Count; a++)
                 {
-                    total += tot[a];
+                    sum += result[a];
                 }
-                Console.WriteLine($"For {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(month))} 2003/2004/2005 the total sale was {total.ToString("C")}.");
+                Console.WriteLine($"For {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(month))} 2003/2004/2005 the total sale was {sum.ToString("C")}.");
             }
         }
     }
