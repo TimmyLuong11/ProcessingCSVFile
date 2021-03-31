@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace ProcessingCSVFile
 {
@@ -73,17 +74,18 @@ namespace ProcessingCSVFile
                 }
             }
 
+            Console.WriteLine();
             //Calculating the sum for the each month for the year and outputting the results to the user
-            foreach (string month in months.Keys)
+            foreach (var item in months.OrderBy(i => int.Parse(i.Key)))
             {
-                List<double> result = months[month];
+                List<double> result = months[item.Key];
                 sum = 0;
                 for (int a = 0; a < result.Count; a++)
                 {
                     sum += result[a];
                 }
-                Console.WriteLine($"For {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(month))} 2003/2004/2005 the total sale was {sum.ToString("C")}.");
-            }
+                Console.WriteLine($"For {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Convert.ToInt32(item.Key))} 2003/2004/2005 the total sale was {sum.ToString("C")}.");
+            }   
         }
     }
 }
